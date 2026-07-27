@@ -1,0 +1,10 @@
+{
+  "validPin": "75583",
+  "invalidPin": "12345",
+  "schoolSearch": "velammal",
+  "school": "Velammal School",
+  "username": "support.admin",
+  "password": "Tce#12345",
+  "invalidUsername": "invalid.user",
+  "invalidPassword": "Wrong@123"
+}
