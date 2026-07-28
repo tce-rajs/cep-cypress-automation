@@ -1,1 +1,1 @@
-{"total":3,"items":[{"uid":"dc06b5f11182f163be622b2f7c97fd71","name":"Password Login Module","statistic":{"failed":0,"broken":0,"skipped":0,"passed":8,"unknown":0,"total":8}},{"uid":"4ba5f35e54ae22b315f26cb832927d84","name":"Login Validation Module","statistic":{"failed":0,"broken":0,"skipped":0,"passed":5,"unknown":0,"total":5}},{"uid":"633c6ef5184f592b93e44cee7a385762","name":"PIN Login Module","statistic":{"failed":0,"broken":0,"skipped":0,"passed":5,"unknown":0,"total":5}}]}
+{"total":0,"items":[]}

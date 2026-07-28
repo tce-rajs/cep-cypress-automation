@@ -1,1 +1,1 @@
-[]
+[{"values":["Chrome (Headed)"],"name":"Browser"},{"values":["win32 x64"],"name":"OS"},{"values":["v24.16.0"],"name":"Node.js"},{"values":["v13.0.0"],"name":"Cypress"},{"values":["Page Object Model (POM)"],"name":"Framework"},{"values":["https://ce-qa-school.devstudi.com/teach/whiteboard"],"name":"BaseURL"},{"values":["QA"],"name":"Environment"}]

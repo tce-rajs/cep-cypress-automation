@@ -91,34 +91,39 @@ npx cypress run --spec "cypress/e2e/login/loginValidation.cy.js" --browser chrom
 
 # Allure Report
 
-## Execute Tests
+## Execute Tests & View Report Automatically
 
 ```bash
 npm run test:allure
+# OR
+npm test
 ```
 
-This command:
-
-- Executes Cypress tests
-- Generates Allure results
+This command automatically:
+1. **Preserves previous test run history & trends** from prior executions.
+2. Executes Cypress tests with Allure reporting enabled.
+3. Attaches **environment information** (Browser, OS, Node, Cypress version, Environment) and **executor metadata**.
+4. Generates the updated Allure Report.
+5. **Automatically opens the Allure Report** in your default web browser!
 
 ---
 
-## Generate HTML Report
+## Additional Commands
 
-```bash
-npm run allure:generate
-```
+- **Open Existing Report**:
+  ```bash
+  npm run allure:open
+  ```
 
----
+- **Generate Report Manually**:
+  ```bash
+  npm run allure:generate
+  ```
 
-## Open Report
-
-```bash
-npm run allure:open
-```
-
-The report will open automatically in your browser.
+- **Clear All History & Start Fresh**:
+  ```bash
+  npm run allure:clear
+  ```
 
 ---
 
