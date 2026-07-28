@@ -1,78 +1,237 @@
-# CEP V2 Automation Project - Login Module
+# CEP Automation Framework (Cypress)
 
-Automation framework for testing the **CEP V2 Login Module** on **`https://ce-qa-school.devstudi.com/teach/whiteboard`** built with **Cypress**, **JavaScript**, **Chai**, **Mocha**, **Page Object Model (POM)**, and interactive **Allure Reports**.
+Automation framework for CEP using Cypress.
 
----
-
-## 📊 Interactive Allure Reporting
-
-Allure Reports provide interactive HTML reports featuring test duration graphs, test status breakdown (Passed, Failed, Broken, Skipped), step logs, timeline, and suite statistics.
-
-### Allure Commands
-
-1. **Run Tests & Generate Allure Report automatically**:
-   ```bash
-   npm run test:allure
-   ```
-
-2. **Generate Allure Report from results**:
-   ```bash
-   npm run allure:generate
-   ```
-
-3. **Open Interactive Allure Report in browser**:
-   ```bash
-   npm run allure:open
-   ```
-
-4. **Run Tests, Generate & Open Allure Report**:
-   ```bash
-   npm run test:allure && npm run allure:open
-   ```
+This project automates the Login module and generates Allure reports after execution.
 
 ---
 
-## 📁 Project Folder Structure
+# Prerequisites
 
-```
-CEP-V2-Automation
-│
-├── cypress
-│   ├── e2e
-│   │   └── login
-│   │       ├── testScenariosAndCases.md  # Detailed TS & TC specification markdown
-│   │       ├── pinLogin.cy.js             # Happy path PIN login + validation specs
-│   │       ├── passwordLogin.cy.js        # Happy path Password login + form specs
-│   │       └── loginValidation.cy.js      # Input validation & error message specs
-│   │
-│   ├── fixtures
-│   │   └── loginData.json                 # Test Data Fixtures
-│   │
-│   ├── pages
-│   │   ├── LoginPage.js                   # Page object with refined modal clicking
-│   │   └── DashboardPage.js               # Dashboard page object
-│   │
-│   └── support
-│       ├── commands.js
-│       └── e2e.js                         # Imports @shelex/cypress-allure-plugin
-│
-├── allure-results                         # Generated raw Allure test data
-├── allure-report                          # Generated interactive HTML report
-├── cypress.config.js                      # Configured with allureWriter plugin
-├── package.json                           # Allure & Cypress npm scripts
-└── README.md
-```
+Install the following software before running the project:
 
----
+- Node.js (Recommended: v18 LTS)
+- npm (comes with Node.js)
+- Google Chrome
+- Git
 
-## 🚀 Standard Execution Commands
+Verify installation:
 
-### Interactive Mode (Cypress Test Runner)
 ```bash
-npm run cypress:open
+node -v
+npm -v
+git --version
 ```
 
-### Headless Execution
+---
+
+# Project Setup
+
+Clone the repository.
+
 ```bash
-npm run cypress:run
+git clone <repository-url>
 ```
+
+Go to the project folder.
+
+```bash
+cd <project-folder>
+```
+
+Install dependencies.
+
+```bash
+npm install
+```
+
+---
+
+# Running Cypress
+
+## Open Cypress (Interactive Mode)
+
+```bash
+npx cypress open
+```
+
+> If the Cypress launcher opens as a blank screen, use the headed execution instead.
+
+---
+
+## Run All Tests
+
+```bash
+npx cypress run --browser chrome --headed
+```
+
+---
+
+## Run a Specific Test
+
+### PIN Login
+
+```bash
+npx cypress run --spec "cypress/e2e/login/pinLogin.cy.js" --browser chrome --headed
+```
+
+### Password Login
+
+```bash
+npx cypress run --spec "cypress/e2e/login/passwordLogin.cy.js" --browser chrome --headed
+```
+
+### Login Validation
+
+```bash
+npx cypress run --spec "cypress/e2e/login/loginValidation.cy.js" --browser chrome --headed
+```
+
+---
+
+# Allure Report
+
+## Execute Tests
+
+```bash
+npm run test:allure
+```
+
+This command:
+
+- Executes Cypress tests
+- Generates Allure results
+
+---
+
+## Generate HTML Report
+
+```bash
+npm run allure:generate
+```
+
+---
+
+## Open Report
+
+```bash
+npm run allure:open
+```
+
+The report will open automatically in your browser.
+
+---
+
+# Project Structure
+
+```
+cypress
+ ├── e2e
+ │   └── login
+ │        ├── loginValidation.cy.js
+ │        ├── passwordLogin.cy.js
+ │        ├── pinLogin.cy.js
+ │        └── testScenariosAndCases.md
+ │
+ ├── fixtures
+ ├── support
+ │    ├── commands.js
+ │    └── e2e.js
+ │
+ └── downloads
+
+allure-results
+allure-report
+
+cypress.config.js
+package.json
+README.md
+```
+
+---
+
+# Common Commands
+
+Install dependencies
+
+```bash
+npm install
+```
+
+Open Cypress
+
+```bash
+npx cypress open
+```
+
+Run all tests
+
+```bash
+npx cypress run --browser chrome --headed
+```
+
+Run a single test
+
+```bash
+npx cypress run --spec "<spec-file>" --browser chrome --headed
+```
+
+Generate Allure report
+
+```bash
+npm run allure:generate
+```
+
+Open Allure report
+
+```bash
+npm run allure:open
+```
+
+---
+
+# Troubleshooting
+
+## Cypress opens a blank screen
+
+Run:
+
+```bash
+npx cypress run --browser chrome --headed
+```
+
+instead of
+
+```bash
+npx cypress open
+```
+
+---
+
+## Allure report not generated
+
+Check that:
+
+- Tests executed successfully
+- `allure-results` folder exists
+- `npm run allure:generate` completed successfully
+
+---
+
+## Fresh Installation
+
+```bash
+npm install
+npx cypress verify
+```
+
+---
+
+# Current Automated Module
+
+- Login
+  - PIN Login
+  - Password Login
+  - Login Validation
+
+Future modules will be added incrementally.
