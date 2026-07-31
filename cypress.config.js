@@ -3,7 +3,7 @@ const allureWriter = require('@shelex/cypress-allure-plugin/writer');
 module.exports = {
   e2e: {
     baseUrl: "https://ce-qa-school.devstudi.com/teach/whiteboard",
-    specPattern: "cypress/e2e/**/*.cy.js",
+    specPattern: "cypress/e2e/**/*.cy.{js,ts}",
     supportFile: "cypress/support/e2e.js",
     viewportWidth: 1280,
     viewportHeight: 720,
