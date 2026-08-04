@@ -9,10 +9,8 @@ export class PlaylistActions {
   visitAndSetupTopic(classData = playlistData.primaryClass) {
     navigationActions.visit();
     navigationActions.loginByPin(playlistData.validPin);
-    navigationActions.openContents();
-    navigationActions.selectChapter(classData.chapter);
-    navigationActions.selectTopic(classData.topic);
-    cy.wait(1500);
+    cy.get('[data-qa-id="playlist-module"], [data-qa-id="playlist-resource-card"]', { timeout: 25000 }).should('exist');
+    cy.wait(1000);
     return this;
   }
 

@@ -58,36 +58,64 @@ function addMetaData() {
     fs.mkdirSync(resultsDir, { recursive: true });
   }
 
-  // Environment Information
+  // Custom Environment Information for Report Overview Header
   const envContent = [
-    `Browser=Chrome`,
-    `OS=${process.platform} ${process.arch}`,
-    `Node.js=${process.version}`,
-    `Cypress=v13.17.0`,
-    `Framework=Page Object Model (POM)`,
+    `Project=CEP V2 Automation`,
+    `Application=CEP V2 Whiteboard & Playlist`,
+    `Environment=QA / Staging`,
+    `Framework=Cypress 13 (Page Object Model)`,
+    `Browser=Google Chrome (Headless)`,
     `BaseURL=https://ce-qa-school.devstudi.com/teach/whiteboard`,
-    `Environment=QA`
+    `Total Scenarios=60 Automated Scenarios`
   ].join('\n');
 
   fs.writeFileSync(path.join(resultsDir, 'environment.properties'), envContent);
 
-  // Executor Information
+  // Custom Executor Information
   const executorInfo = {
-    name: "Cypress Allure Runner",
+    name: "CEP V2 Cypress Automation Engine",
     type: "cypress",
-    url: "https://ce-qa-school.devstudi.com",
+    url: "https://ce-qa-school.devstudi.com/teach/whiteboard",
     buildOrder: Date.now(),
-    buildName: `Execution @ ${new Date().toLocaleString()}`,
+    buildName: `CEP V2 Execution @ ${new Date().toLocaleString()}`,
     buildUrl: ""
   };
   fs.writeFileSync(path.join(resultsDir, 'executor.json'), JSON.stringify(executorInfo, null, 2));
 }
 
 /**
+ * Customize report HTML and Summary JSON widget heading title
+ */
+function customizeReportMetadata() {
+  const summaryPath = path.join(reportDir, 'widgets', 'summary.json');
+  if (fs.existsSync(summaryPath)) {
+    try {
+      const summary = JSON.parse(fs.readFileSync(summaryPath, 'utf-8'));
+      summary.reportName = "CEP V2 Test Automation Report";
+      fs.writeFileSync(summaryPath, JSON.stringify(summary, null, 2));
+      console.log('✔ Custom Allure Report Title updated to: "CEP V2 Test Automation Report"');
+    } catch (e) {
+      console.error('Failed to update summary.json reportName:', e.message);
+    }
+  }
+
+  const indexPath = path.join(reportDir, 'index.html');
+  if (fs.existsSync(indexPath)) {
+    try {
+      let html = fs.readFileSync(indexPath, 'utf-8');
+      html = html.replace(/<title>.*<\/title>/i, '<title>CEP V2 Test Automation Report</title>');
+      fs.writeFileSync(indexPath, html);
+    } catch (e) {
+      console.error('Failed to update index.html title:', e.message);
+    }
+  }
+}
+
+/**
  * Generate Allure Report
  */
 function generateReport() {
-  console.log('--- Generating Allure Report ---');
+  console.log('--- Generating Custom Allure Report ---');
   addMetaData();
 
   // Ensure history folder is copied if present
@@ -100,6 +128,7 @@ function generateReport() {
       cwd: projectRoot,
       stdio: 'inherit'
     });
+    customizeReportMetadata();
     console.log('✔ Allure report generated successfully at allure-report/');
   } catch (err) {
     console.error('❌ Failed to generate Allure report:', err.message);
@@ -137,7 +166,7 @@ function openReport(detached = false) {
 }
 
 /**
- * Complete test suite execution flow (cross-platform, windows safe)
+ * Complete test suite execution flow
  */
 function runAll() {
   beforeTest();

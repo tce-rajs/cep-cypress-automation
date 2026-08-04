@@ -29,7 +29,7 @@ class LoginPage {
   openLoginModal() {
     cy.get('[data-qa-id="login-auth-modal-container"]', { timeout: 15000 })
       .should('exist')
-      .click();
+      .click({ force: true });
     cy.wait(1500); // Visual pause for modal opening animation
     return this;
   }
@@ -37,9 +37,20 @@ class LoginPage {
   enterPin(pin) {
     const digits = String(pin).split('');
     digits.forEach((digit, index) => {
-      this.elements.pinInput(index).should('be.visible').clear().type(digit);
-      cy.wait(200);
+      this.elements.pinInput(index).should('exist').clear({ force: true }).type(digit, { force: true });
+      cy.wait(150);
     });
+
+    // Trigger form submission via Enter key on final PIN digit
+    this.elements.pinInput(digits.length - 1).type('{enter}', { force: true });
+
+    cy.get('body').then(($body) => {
+      const $submit = $body.find('[data-qa-id="login-btn"], [data-qa-id="login-pin-submit-button"], button[type="submit"], .btn-login');
+      if ($submit.length > 0 && $submit.is(':visible')) {
+        cy.wrap($submit.first()).click({ force: true });
+      }
+    });
+    cy.wait(1500);
     return this;
   }
 

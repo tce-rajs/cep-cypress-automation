@@ -1,33 +1,32 @@
 /**
  * PDF / Worksheet Player Locators Repository (MOD-004)
- * Standard: Uses data-qa-id and DOM element classes
+ * Standard: Exact Angular Component & Core-Lib DOM Selectors
  */
 export const pdfPlayerLocators = {
-  // Playlist Trigger
+  // Playlist Resource Trigger Cards
   playlistPdfCard: '[data-qa-id="playlist-resource-card"]',
   playlistResourcePlayer: '[data-qa-id="playlist-resource-player"]',
 
-  // PDF Viewer & Canvas
-  pdfViewerContainer: 'pdf-viewer, .pdf-scroll-container, app-pdf, .library-search-resources-details, .resources-player-wrapper',
+  // PDF Viewer & Canvas Containers
+  pdfViewerContainer: 'pdf-viewer, .pdf-scroll-container, app-pdf, .library-search-resources-details, .pdf-player, app-pdf-player',
   pdfCanvas: 'pdf-viewer canvas, canvas, .ng2-pdf-viewer-container',
   loadingSpinner: 'ngx-spinner, .pdf-loading-spinner',
   pdfTitle: '.library-search-resources-details-title, .pdf-title',
 
-  // Pagination & Navigation Controls
-  prevPageBtn: 'app-nav-pagination .prev-btn, app-nav-pagination button.page-prev, app-nav-pagination button:has(.material-icons:contains("chevron_left"))',
-  nextPageBtn: 'app-nav-pagination .next-btn, app-nav-pagination button.page-next, app-nav-pagination button:has(.material-icons:contains("chevron_right"))',
-  currentPageInput: 'app-nav-pagination .page-input, app-nav-pagination input[type="number"]',
-  totalPagesText: 'app-nav-pagination .total-pages, app-nav-pagination .page-count-text',
-  goToPageInput: 'app-nav-pagination input.page-input',
-  goToPageBtn: 'app-nav-pagination .go-btn',
+  // Pagination & Navigation Controls (core-lib pagination-view.component.html)
+  prevPageBtn: '.previous-item button.mypage-link, app-pagination-view .previous-item button',
+  nextPageBtn: '.next-item button.mypage-link, app-pagination-view .next-item button',
+  activePageItem: 'li.page-item.number-item button.mypage-link.selected',
+  goToPageInput: '.quick-nav .input-wrapper input, app-pagination-view input[type="text"], app-pagination-view input[type="number"]',
+  goToPageBtn: '.quick-nav .input-wrapper button.goBtn, app-pagination-view .goBtn',
 
-  // View & Mode Controls
-  portraitBtn: 'app-nav-pagination .portrait-btn, app-nav-pagination [title*="Portrait"]',
-  landscapeBtn: 'app-nav-pagination .landscape-btn, app-nav-pagination [title*="Landscape"]',
-  toggleAnsBtn: 'app-nav-pagination .toggle-ans-btn, app-nav-pagination button.ans-toggle',
-  printBtn: 'app-nav-pagination .print-btn, [data-qa-id="add-resource-whiteboard-download-pdf-btn"]',
-  closeBtn: '[data-qa-id="tce-library-pdf-close-btn"], app-nav-pagination .close-btn, .resources-details-close, .close-icon, img[src*="CollapseResource"]',
+  // View & Mode Controls (core-lib worksheet-action-nav.component.html)
+  portraitBtn: '.portraitLandscapeToggleIcon',
+  landscapeBtn: '.portraitLandscapeToggleIcon',
+  toggleAnsBtn: '.worksheet_btn',
+  printBtn: '.printIcon',
+  closeBtn: '.closeIcon, [data-qa-id="playlist-resource-close-icon-btn"], [data-qa-id="tce-library-pdf-close-btn"]',
 
-  // Playlist Return Container
-  playlistContainer: '[data-qa-id="playlist-module"]'
+  // Playlist Return Container (Visible DOM Card/Module Container)
+  playlistContainer: '[data-qa-id="playlist-module"], [data-qa-id="playlist-resource-card"]'
 };

@@ -90,5 +90,12 @@ describe('Navigation Module (MOD-002)', () => {
     navigationActions.selectDivision(navigationData.secondaryClass.division);
     navigationActions.selectSubject(navigationData.secondaryClass.subject);
     navigationAssertions.verifyCurrentClassDisplayed(navigationData.secondaryClass.grade);
+
+    // Reset back to primary Class 9 Science so state remains pristine for all modules
+    navigationActions.openClassPopup();
+    navigationActions.openAllClasses();
+    navigationActions.selectGrade(navigationData.defaultClass.grade);
+    navigationActions.selectDivision(navigationData.defaultClass.division);
+    navigationActions.selectSubject(navigationData.defaultClass.subject);
   });
 });

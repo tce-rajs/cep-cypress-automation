@@ -5,11 +5,11 @@
 export const playlistData = {
   validPin: '75583',
   primaryClass: {
-    grade: 'Class 11',
+    grade: 'Class 9',
     division: 'A',
-    subject: 'Computer Science',
-    chapter: 'Computer System',
-    topic: 'Introduction to Computer System'
+    subject: 'Science',
+    chapter: 'Motion',
+    topic: 'Describing Motion'
   },
   secondaryClass: {
     grade: 'Class 9',
