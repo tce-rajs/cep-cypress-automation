@@ -1,5 +1,5 @@
 {
-  "name": "cep-automation-cypress",
+  "name": "cep-cypress-automation",
   "version": "1.0.0",
   "description": "CEP V2 Automation Project with Cypress, Page Object Model, and Allure Reports",
   "main": "index.js",

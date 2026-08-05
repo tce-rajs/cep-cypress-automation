@@ -1,0 +1,9 @@
+node_modules/
+allure-results/
+allure-report/
+.allure-history-temp/
+cypress/screenshots/
+cypress/videos/
+cypress/downloads/
+.ds_store
+*.log
