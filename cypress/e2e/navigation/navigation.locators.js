@@ -1,6 +1,6 @@
 /**
  * Navigation Locators Repository
- * Standard: Uses data-qa-id attributes exclusively
+ * Standard: Uses data-qa-id attributes with Angular Material fallbacks
  */
 export const navigationLocators = {
   // Login Dependency
@@ -32,11 +32,11 @@ export const navigationLocators = {
   selectSubjectBtn: '[data-qa-id="common-select-subject-btn"]',
   
   // Contents / Chapter & Topic Selector
-  chapterTopicBtn: '[data-qa-id="playlist-chapter-topic-btn"]',
-  chapterTpPopup: '[data-qa-id="playlist-chapter-tp-popup"]',
-  contentsSelector: '[data-qa-id="playlist-contents-selector"]',
-  selectChapter: '[data-qa-id="playlist-select-chapter"]',
-  selectTopic: '[data-qa-id="playlist-select-topic"]',
+  chapterTopicBtn: '[data-qa-id="playlist-chapter-topic-btn"], [data-qa-id="playlist-contents-selector"], app-content-nav',
+  chapterTpPopup: '[data-qa-id="playlist-chapter-tp-popup"], .contents-selector--item, .chapter-tp-dialog, .modal--select-content-menu',
+  contentsSelector: '[data-qa-id="playlist-contents-selector"], app-content-nav',
+  selectChapter: '[data-qa-id="playlist-select-chapter"], mat-list-item, .chapter-item',
+  selectTopic: '[data-qa-id="playlist-select-topic"], mat-list-item, .topic-item',
   navTopicLeft: '[data-qa-id="playlist-nav-topic-left"]',
   navTopicRight: '[data-qa-id="playlist-nav-topic-right"]',
   

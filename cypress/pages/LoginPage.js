@@ -27,10 +27,26 @@ class LoginPage {
   }
 
   openLoginModal() {
+    cy.get('body').then(($body) => {
+      // If user is already logged in, click avatar & sign out to restore guest mode!
+      if ($body.find('[data-qa-id="wb-welcome-back-title"]:visible, [data-qa-id="playlist-current-grade-subject-btn"]:visible, [data-qa-id="playlist-module"]:visible').length > 0) {
+        const $avatar = $body.find('[data-qa-id="toolbar-user-avatar"]:visible, .userimg:visible, .userborder:visible');
+        if ($avatar.length > 0) {
+          cy.wrap($avatar.first()).click({ force: true });
+          cy.wait(500);
+        }
+        const $signOut = $body.find('[data-qa-id="floating-signout-trigger-btn"]:visible, [data-qa-id="toolbar-profile-signout-btn"]:visible, .SignOutBtn:visible, img[src*="SignOut"]:visible');
+        if ($signOut.length > 0) {
+          cy.wrap($signOut.first()).click({ force: true });
+          cy.wait(1000);
+        }
+      }
+    });
+
     cy.get('[data-qa-id="login-auth-modal-container"]', { timeout: 15000 })
       .should('exist')
       .click({ force: true });
-    cy.wait(1500); // Visual pause for modal opening animation
+    cy.wait(1500);
     return this;
   }
 
@@ -58,7 +74,7 @@ class LoginPage {
     cy.get('[data-qa-id="login-pin-password-link"]', { timeout: 15000 })
       .should('exist')
       .click({ force: true });
-    cy.wait(1500); // Visual pause when switching to Password view
+    cy.wait(1500);
     return this;
   }
 

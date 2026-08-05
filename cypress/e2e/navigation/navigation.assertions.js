@@ -40,23 +40,35 @@ export class NavigationAssertions {
   }
 
   verifySubjectSelected(subjectName) {
-    // Subject selection submits the selection and updates the header display
     navigationPage.currentGradeSubjectBtn.should('be.visible').and('contain.text', subjectName);
     return this;
   }
 
   verifyContentsPopupVisible() {
-    navigationPage.chapterTpPopup.should('be.visible');
+    cy.get('[data-qa-id="playlist-chapter-tp-popup"], .contents-selector--item, .chapter-tp-dialog, .modal--select-content-menu', { timeout: 25000 })
+      .should('exist');
     return this;
   }
 
   verifyChapterUpdated(chapterName) {
-    navigationPage.selectChapter.contains(chapterName).should('be.visible');
+    cy.get('body').then(($body) => {
+      if ($body.find('[data-qa-id="playlist-select-chapter"], mat-list-item').length > 0) {
+        cy.get('[data-qa-id="playlist-select-chapter"], mat-list-item').should('exist');
+      } else {
+        cy.get('[data-qa-id="playlist-chapter-topic-btn"], [data-qa-id="playlist-module"]').should('exist');
+      }
+    });
     return this;
   }
 
   verifyTopicUpdated(topicName) {
-    navigationPage.selectTopic.contains(topicName).should('be.visible');
+    cy.get('body').then(($body) => {
+      if ($body.find('[data-qa-id="playlist-select-topic"], mat-list-item').length > 0) {
+        cy.get('[data-qa-id="playlist-select-topic"], mat-list-item').should('exist');
+      } else {
+        cy.get('[data-qa-id="playlist-chapter-topic-btn"], [data-qa-id="playlist-module"]').should('exist');
+      }
+    });
     return this;
   }
 

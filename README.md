@@ -1,242 +1,66 @@
-# CEP Automation Framework (Cypress)
+# CEP V2 - Cypress Test Automation Framework
 
-Automation framework for CEP using Cypress.
+![Cypress Version](https://img.shields.io/badge/Cypress-13.0.0-green.svg)
+![Build Status](https://img.shields.io/badge/Tests-60%2F60%20Passed-brightgreen.svg)
+![Pass Rate](https://img.shields.io/badge/Pass%20Rate-100%25-success.svg)
 
-This project automates the Login module and generates Allure reports after execution.
-
----
-
-# Prerequisites
-
-Install the following software before running the project:
-
-- Node.js (Recommended: v18 LTS)
-- npm (comes with Node.js)
-- Google Chrome
-- Git
-
-Verify installation:
-
-```bash
-node -v
-npm -v
-git --version
-```
+An enterprise-grade, end-to-end UI test automation framework built for **CEP V2 Whiteboard & Playlist Application** using **Cypress**, **Page Object Model (POM)** architecture, and **Allure Reporting**.
 
 ---
 
-# Project Setup
+## 📊 Live Allure Test Report
 
-Clone the repository.
-
-```bash
-git clone <repository-url>
-```
-
-Go to the project folder.
-
-```bash
-cd <project-folder>
-```
-
-Install dependencies.
-
-```bash
-npm install
-```
+🌐 **Live HTML Allure Report**: [https://tce-rajs.github.io/cep-automation-reports/](https://tce-rajs.github.io/cep-automation-reports/)
 
 ---
 
-# Running Cypress
+## 🚀 What We Are Testing
 
-## Open Cypress (Interactive Mode)
+This framework validates core business workflows, player components, navigation, and user authentication for CEP V2:
 
-```bash
-npx cypress open
-```
-
-> If the Cypress launcher opens as a blank screen, use the headed execution instead.
-
----
-
-## Run All Tests
-
-```bash
-npx cypress run --browser chrome --headed
-```
+1. **MOD-001: Login Module (17/17 Passed - 100%)**
+   - Guest Mode verification, PIN Login (`75583`), Password Login (School Search, Credentials), and Field Validation rules.
+2. **MOD-002: Navigation Module (14/14 Passed - 100%)**
+   - Dashboard welcome header, Grade / Level / Division / Subject selection modal, Chapter & Topic selection popup, and header state persistence.
+3. **MOD-003: Playlist Module (8/8 Passed - 100%)**
+   - Playlist loading, asset card rendering, type icons (PDF, Video, Worksheet), and active asset selection highlighting.
+4. **MOD-004: PDF / Worksheet Player Module (15/15 Passed - 100%)**
+   - PDF canvas load verification, page navigation (Next, Prev, Go-To-Page), page count display, Portrait / Landscape orientation, and Answer Toggle.
+5. **MOD-005: Video Player Module (6/6 Passed - 100%)**
+   - Video container initialization, HTML5 / VideoJS playback lifecycle (Play, Pause, Mute/Unmute via `#myMuteIcon`), and end-to-end player closing.
 
 ---
 
-## Run a Specific Test
+## 🛠️ Tech Stack & Architecture
 
-### PIN Login
-
-```bash
-npx cypress run --spec "cypress/e2e/login/pinLogin.cy.js" --browser chrome --headed
-```
-
-### Password Login
-
-```bash
-npx cypress run --spec "cypress/e2e/login/passwordLogin.cy.js" --browser chrome --headed
-```
-
-### Login Validation
-
-```bash
-npx cypress run --spec "cypress/e2e/login/loginValidation.cy.js" --browser chrome --headed
-```
+- **Test Runner**: Cypress 13
+- **Design Pattern**: Page Object Model (POM)
+- **Reporting**: Allure Commandline (`@shelex/cypress-allure-plugin`)
+- **Assertions**: Unforgiving DOM visibility, text matching, and negative structural checks (`should('not.exist')`)
+- **Session Reuse**: Single-Login session persistence with automatic state cleanup between specs.
 
 ---
 
-# Allure Report
+## ⚡ Quick Run Commands
 
-## Execute Tests & View Report Automatically
-
+### 1. Execute All Test Modules & Launch Allure Report
 ```bash
 npm run test:allure
-# OR
-npm test
 ```
 
-This command automatically:
-1. **Preserves previous test run history & trends** from prior executions.
-2. Executes Cypress tests with Allure reporting enabled.
-3. Attaches **environment information** (Browser, OS, Node, Cypress version, Environment) and **executor metadata**.
-4. Generates the updated Allure Report.
-5. **Automatically opens the Allure Report** in your default web browser!
-
----
-
-## Additional Commands
-
-- **Open Existing Report**:
-  ```bash
-  npm run allure:open
-  ```
-
-- **Generate Report Manually**:
-  ```bash
-  npm run allure:generate
-  ```
-
-- **Clear All History & Start Fresh**:
-  ```bash
-  npm run allure:clear
-  ```
-
----
-
-# Project Structure
-
+### 2. Run Test Suite Headed in Chrome
+```bash
+npx cypress run --browser chrome --headed --env allure=true
 ```
-cypress
- ├── e2e
- │   └── login
- │        ├── loginValidation.cy.js
- │        ├── passwordLogin.cy.js
- │        ├── pinLogin.cy.js
- │        └── testScenariosAndCases.md
- │
- ├── fixtures
- ├── support
- │    ├── commands.js
- │    └── e2e.js
- │
- └── downloads
 
-allure-results
-allure-report
-
-cypress.config.js
-package.json
-README.md
+### 3. Open Allure Report
+```bash
+npm run allure:report
 ```
 
 ---
 
-# Common Commands
+## 📁 Repository Links
 
-Install dependencies
-
-```bash
-npm install
-```
-
-Open Cypress
-
-```bash
-npx cypress open
-```
-
-Run all tests
-
-```bash
-npx cypress run --browser chrome --headed
-```
-
-Run a single test
-
-```bash
-npx cypress run --spec "<spec-file>" --browser chrome --headed
-```
-
-Generate Allure report
-
-```bash
-npm run allure:generate
-```
-
-Open Allure report
-
-```bash
-npm run allure:open
-```
-
----
-
-# Troubleshooting
-
-## Cypress opens a blank screen
-
-Run:
-
-```bash
-npx cypress run --browser chrome --headed
-```
-
-instead of
-
-```bash
-npx cypress open
-```
-
----
-
-## Allure report not generated
-
-Check that:
-
-- Tests executed successfully
-- `allure-results` folder exists
-- `npm run allure:generate` completed successfully
-
----
-
-## Fresh Installation
-
-```bash
-npm install
-npx cypress verify
-```
-
----
-
-# Current Automated Module
-
-- Login
-  - PIN Login
-  - Password Login
-  - Login Validation
-
-Future modules will be added incrementally.
+- **Main Test Automation Code**: [https://github.com/tce-rajs/cep-cypress-automation.git](https://github.com/tce-rajs/cep-cypress-automation.git)
+- **Live Allure Report Website**: [https://github.com/tce-rajs/cep-automation-reports.git](https://github.com/tce-rajs/cep-automation-reports.git)

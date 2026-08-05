@@ -98,7 +98,7 @@ export class NavigationActions {
 
   openContents() {
     cy.get('body').then(($body) => {
-      if ($body.find('[data-qa-id="playlist-chapter-tp-popup"]:visible').length === 0) {
+      if ($body.find('[data-qa-id="playlist-chapter-tp-popup"]:visible, .contents-selector--item:visible').length === 0) {
         navigationPage.chapterTopicBtn.should('exist').click({ force: true });
         cy.wait(800);
       }
@@ -131,7 +131,12 @@ export class NavigationActions {
   }
 
   selectTopic(topicName) {
-    this.openContents();
+    cy.get('body').then(($body) => {
+      if ($body.find('[data-qa-id="playlist-select-topic"]:visible, mat-list-item:visible').length === 0) {
+        this.openContents();
+      }
+    });
+
     cy.get('body').then(($body) => {
       const $topics = $body.find('[data-qa-id="playlist-select-topic"]:visible, mat-list-item:visible');
       if ($topics.length > 0) {

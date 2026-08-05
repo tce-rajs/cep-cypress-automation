@@ -12,6 +12,22 @@ const tempHistoryDir = path.join(projectRoot, '.allure-history-temp');
 const command = process.argv[2];
 
 /**
+ * Get next build order number for clean Trend X-Axis labels (#1, #2, #3)
+ */
+function getBuildOrder() {
+  const buildFile = path.join(projectRoot, '.allure-build-number');
+  let buildNum = 1;
+  if (fs.existsSync(buildFile)) {
+    try {
+      const saved = parseInt(fs.readFileSync(buildFile, 'utf-8'), 10);
+      if (!isNaN(saved)) buildNum = saved + 1;
+    } catch (e) { buildNum = 1; }
+  }
+  fs.writeFileSync(buildFile, String(buildNum));
+  return buildNum;
+}
+
+/**
  * Preserve history before test run
  */
 function beforeTest() {
@@ -51,6 +67,21 @@ function beforeTest() {
 }
 
 /**
+ * Completely clear all old results, reports, and history (Fresh Start)
+ */
+function clearAll() {
+  console.log('--- Cleaning Allure Results, Reports, & History ---');
+  [resultsDir, reportDir, tempHistoryDir].forEach((dir) => {
+    if (fs.existsSync(dir)) {
+      fs.rmSync(dir, { recursive: true, force: true });
+    }
+  });
+  const buildFile = path.join(projectRoot, '.allure-build-number');
+  if (fs.existsSync(buildFile)) fs.unlinkSync(buildFile);
+  console.log('✔ All previous Allure data cleared successfully.');
+}
+
+/**
  * Add environment and executor metadata to allure-results
  */
 function addMetaData() {
@@ -71,29 +102,55 @@ function addMetaData() {
 
   fs.writeFileSync(path.join(resultsDir, 'environment.properties'), envContent);
 
-  // Custom Executor Information
+  // Clean sequential build number for readable X-Axis on Trend graph (e.g. Build #1, Build #2)
+  const buildNum = getBuildOrder();
   const executorInfo = {
     name: "CEP V2 Cypress Automation Engine",
     type: "cypress",
     url: "https://ce-qa-school.devstudi.com/teach/whiteboard",
-    buildOrder: Date.now(),
-    buildName: `CEP V2 Execution @ ${new Date().toLocaleString()}`,
+    buildOrder: buildNum,
+    buildName: `Run #${buildNum}`,
     buildUrl: ""
   };
   fs.writeFileSync(path.join(resultsDir, 'executor.json'), JSON.stringify(executorInfo, null, 2));
 }
 
 /**
- * Customize report HTML and Summary JSON widget heading title
+ * Customize report HTML and Summary JSON widget heading title & CURRENT RUN timing
  */
 function customizeReportMetadata() {
   const summaryPath = path.join(reportDir, 'widgets', 'summary.json');
+
+  // Calculate current run start, stop, and duration from allure-results JSON files
+  let minStart = Infinity;
+  let maxStop = 0;
+  if (fs.existsSync(resultsDir)) {
+    const files = fs.readdirSync(resultsDir);
+    files.forEach((file) => {
+      if (file.endsWith('-result.json')) {
+        try {
+          const content = JSON.parse(fs.readFileSync(path.join(resultsDir, file), 'utf-8'));
+          if (content.start && content.start < minStart) minStart = content.start;
+          if (content.stop && content.stop > maxStop) maxStop = content.stop;
+        } catch (e) {}
+      }
+    });
+  }
+
   if (fs.existsSync(summaryPath)) {
     try {
       const summary = JSON.parse(fs.readFileSync(summaryPath, 'utf-8'));
       summary.reportName = "CEP V2 Test Automation Report";
+
+      if (minStart !== Infinity && maxStop > 0 && maxStop >= minStart) {
+        summary.time.start = minStart;
+        summary.time.stop = maxStop;
+        summary.time.duration = maxStop - minStart;
+        console.log(`✔ Updated report duration to current run: ${Math.round((maxStop - minStart) / 1000)}s`);
+      }
+
       fs.writeFileSync(summaryPath, JSON.stringify(summary, null, 2));
-      console.log('✔ Custom Allure Report Title updated to: "CEP V2 Test Automation Report"');
+      console.log('✔ Custom Allure Report Title & Duration updated successfully.');
     } catch (e) {
       console.error('Failed to update summary.json reportName:', e.message);
     }
@@ -189,6 +246,9 @@ function runAll() {
 switch (command) {
   case 'before':
     beforeTest();
+    break;
+  case 'clear':
+    clearAll();
     break;
   case 'generate':
     generateReport();
